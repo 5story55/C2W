@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>C2W - יצירת קליפים</title>
+    <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+    integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I"
+    crossorigin="anonymous"
+  />
+  <link href="./style.css" rel="stylesheet" />
+  <link
+    rel="icon"
+    href="https://cdn-icons-png.flaticon.com/128/174/174883.png"
+  />
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+
+    .loader {
+      border: 4px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 4px solid #3498db;
+      width: 20px;
+      height: 20px;
+      animation: spin 2s linear infinite;
+    }
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+  <link
+    href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap"
+    rel="stylesheet"
+/>
+</head>
+<body>
+  
+  <script>
+    var collapseElementList = [].slice.call(
+      document.querySelectorAll(".collapse")
+    );
+    var collapseList = collapseElementList.map(function (collapseEl) {
+      return new bootstrap.Collapse(collapseEl);
+    });
+
+    var tooltipTriggerList = [].slice.call(
+      document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    );
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+  </script>
+   <div class="container">
+    <header class="blog-header py-3 ">
+        <span class="input-group-text">נא לבחור חרוז</span>
+      <div class="input-group mb-3">
+        
+        <div id="loader" class="loader"></div>
+        <input
+        type="text"
+        id="peopleList"
+        list="people"
+        autocomplete="off"
+        class="form-control"
+      />
+      <datalist id="people"> </datalist>
+      
+   </div>
+   <div class="form-control input-group-text mb-0" role="group">
+   <button onclick="submitData()" class="btn btn-outline-secondary form-control input-group-text" id="submitData">
+      לבחירה
+    </button>
+   </div>
+  </div>
+   <div class="container">
+      <div class="col-auto">
+          <h2 class="mb-2"><u>יצירת קליפים</u></h2>
+          <h3 class="mb-2" id="nameB4"></h3>
+      </div>
+     
+<div class="form-control mb-3">
+  <p class="fs-5 fw-normal text-start" id="clip1B4"></p>
+  <div class="input-group-text" role="group">
+    <input type="text" id="clip1" class="form-control" placeholder="הוספת קליפ1" autocomplete="off"/>
+    <button
+      onclick="change('1')"
+      class="btn form-control btn-outline-secondary"
+      id="clip1Change"
+    >
+    הוספת קליפ1
+  </button>
+</div>
+</div>
+<div class="form-control mb-3">
+  <p class="fs-5 fw-normal text-start" id="clip2B4"></p>
+  <div class="input-group-text" role="group">
+    <input type="text" id="clip2" class="form-control" placeholder="הוספת קליפ2" autocomplete="off"/>
+    <button
+      onclick="change('2')"
+      class="btn form-control btn-outline-secondary"
+      id="clip2Change"
+    >
+    הוספת קליפ2
+  </button>
+</div>
+</div>
+<div class="form-control mb-3">
+  <p class="fs-5 fw-normal text-start" id="clip3B4"></p>
+  <div class="input-group-text" role="group">
+    <input type="text" id="clip3" class="form-control" placeholder="הוספת קליפ3" autocomplete="off"/>
+    <button
+      onclick="change('3')"
+      class="btn form-control btn-outline-secondary"
+      id="clip3Change"
+    >
+    הוספת קליפ3
+  </button>
+</div>
+</div>
+<div class="form-control mb-3">
+  <p class="fs-5 fw-normal text-start" id="clip4B4"></p>
+  <div class="input-group-text" role="group">
+    <input type="text" id="clip4" class="form-control" placeholder="הוספת קליפ4" autocomplete="off"/>
+    <button
+      onclick="change('4')"
+      class="btn form-control btn-outline-secondary"
+      id="clip4Change"
+    >
+    הוספת קליפ4
+  </button>
+</div>
+</div>
+<div class="form-control mb-3">
+  <p class="fs-5 fw-normal text-start" id="clip5B4"></p>
+  <div class="input-group-text" role="group">
+    <input type="text" id="clip5" class="form-control" placeholder="הוספת קליפ5" autocomplete="off"/>
+    <button
+      onclick="change('5')"
+      class="btn form-control btn-outline-secondary"
+      id="clip5Change"
+    >
+    הוספת קליפ5
+  </button>
+</div>
+</div>
+<div class="form-control mb-3">
+  <p class="fs-5 fw-normal text-start" id="clip6B4"></p>
+  <div class="input-group-text" role="group">
+    <input type="text" id="clip6" class="form-control" placeholder="הוספת קליפ6" autocomplete="off"/>
+    <button
+      onclick="change('6')"
+      class="btn form-control btn-outline-secondary"
+      id="clip6Change"
+    >
+    הוספת קליפ6
+  </button>
+</div>
+</div>
+   <script
+   src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+   integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+   crossorigin="anonymous"
+ ></script>
+ <script
+   src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+   integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+   crossorigin="anonymous"
+ ></script>
+ <script type="text/javascript" src='./create.js'></script>
+</body>
+</html>

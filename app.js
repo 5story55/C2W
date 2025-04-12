@@ -28,6 +28,7 @@ var clipsToChange=0;
 var indiclipsToChange=0;
 var tasks4personB4 = {};
 var tasks4personB4Eng = {};
+var loaderStatus = document.getElementById("loaderStatus");
 const url =
   "https://script.google.com/macros/s/AKfycbzojs9dIr-pr54z2zCEXxklX5h1wIRBHt1ktH8Wwg9KC62R4iDaaCftIK7rHJzrjC3nVQ/exec";
 const taskurl =
@@ -47,7 +48,7 @@ function getData() {
       return res.json();
     })
     .then((json) => {
-      json.data.forEach((ele) => {
+        json.data.forEach((ele, index) => { 
         newPerson = {
           name: ele.name,
           recordingdate: "",
@@ -61,9 +62,23 @@ function getData() {
             feedback:ele.feedback,
           link: ele.linkfull,
           row: tableRow,
-            chain: ele.chain
+            chain: ele.chain,
+             id:ele.id
         };
         tableRow++;
+        setTimeout(() => {
+                    if (newPerson.id) {
+                        loaderStatus.innerHTML = "בודקת חרוז " + newPerson.id + "...";
+                        console.log("בודקת חרוז " + newPerson.id);
+                    }
+                    if (index === json.data.length - 2) { 
+                        setTimeout(() => {
+                            loaderStatus.style.display = "none";
+                            const loader = document.getElementById("loader");
+                            loader.style.display = "none";
+                        }, 20);
+                    }
+                }, Math.max(0, index*20-6000)); 
         if(ele.linkfull===""){
             newPerson.link=ele.linkfive;
         }
@@ -632,9 +647,11 @@ function removeAllChildNodes(parent) {
     parent.removeChild(parent.firstChild);
   }
 }
+loaderStatus.innerHTML = "מתחילה בדיקת חרוזים...";
+
 setTimeout(() => {
-  const loader = document.getElementById("loader");
-  loader.style.display = "none";
+//  const loader = document.getElementById("loader");
+//  loader.style.display = "none";
   showTasks("subs");
 }, 2050);
 function taskAlreadyExist(task) {

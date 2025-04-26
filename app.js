@@ -26,6 +26,15 @@ var tasks4person;
 var tasks4personEng;
 var clipsToChange=0;
 var indiclipsToChange=0;
+var subsDateVal=1;
+var clipsCreateDateVal=2;
+var clip1sendDateVal=21;
+var clip2sendDateVal=28;
+var clip3sendDateVal=35;
+var clip1removeDateVal=14;
+var clip2removeDateVal=14;
+var clip3removeDateVal=14;
+var nullTask=[];
 var tasks4personB4 = {};
 var tasks4personB4Eng = {};
 var loaderStatus = document.getElementById("loaderStatus");
@@ -33,12 +42,72 @@ const url =
   "https://script.google.com/macros/s/AKfycbzojs9dIr-pr54z2zCEXxklX5h1wIRBHt1ktH8Wwg9KC62R4iDaaCftIK7rHJzrjC3nVQ/exec";
 const taskurl =
   "https://script.google.com/macros/s/AKfycby17a_vfiR8IXwkNb8Uk2ZxAet_I1qkJd6y9n_nZRfl2S5-6pad8EmH9GyxRB0WrO78Aw/exec";
+const timingDataURL =
+    "https://script.google.com/macros/s/AKfycbzh6afzt8FHJ8DC7eACCbofDucc-K5gupE09xeMpkbnveNbrWJZAkdqiShaYrb-AyiTlg/exec";
+
 var today = changeTimeZone(new Date(), 'Asia/Jerusalem');
 var todaysDay = today.getDate();
 var todaysMonth = today.getMonth() + 1;
 var todaysCurrentDate = todaysDay + "." + todaysMonth;
 console.log("today: " + today);
-getData();
+
+getTimingData();
+    setTimeout(() => {
+      getData();
+    }, 1000);   
+
+function getTimingData() {
+
+    fetch(timingDataURL)
+        .then((res) => {
+            return res.json();
+        })
+        .then((json) => {
+            json.data.taskTiming.forEach((ele) => {
+                                        loaderStatus.innerHTML = "בודקת תזמוני משימות...";
+               if(ele.taskname==="subs"&&ele.daysfromrecordingdate!==""){
+                        subsDateVal=ele.daysfromrecordingdate;
+                    
+                    console.log("changed subsDateVal - "+subsDateVal);
+                }
+                if(ele.taskname==="clipscreate"&&ele.daysfromrecordingdate!==""){
+                        clipsCreateDateVal=ele.daysfromrecordingdate;
+                    
+                    console.log("changed clipsCreateDateVal - "+clipsCreateDateVal);
+                }
+                if(ele.taskname==="clip1send"&&ele.daysfromrecordingdate!==""&&ele.daystodeletetask!==""){
+                        clip1sendDateVal=ele.daysfromrecordingdate;
+                    
+                    console.log("changed clip1sendDateVal - "+clip1sendDateVal);
+                    clip1removeDateVal=ele.daystodeletetask;
+                    
+                    console.log("changed clip1removeDateVal - "+clip1removeDateVal);
+                }
+                if(ele.taskname==="clip2send"&&ele.daysfromrecordingdate!==""&&ele.daystodeletetask!==""){
+                        clip2sendDateVal=ele.daysfromrecordingdate;
+                    
+                    console.log("changed clip2sendDateVal - "+clip2sendDateVal);
+                    clip2removeDateVal=ele.daystodeletetask;
+                    
+                    console.log("changed clip2removeDateVal - "+clip2removeDateVal);
+                }
+                if(ele.taskname==="clip3send"&&ele.daysfromrecordingdate!==""&&ele.daystodeletetask!==""){
+                        clip3sendDateVal=ele.daysfromrecordingdate;
+                    
+                    console.log("changed clip3sendDateVal - "+clip3sendDateVal);
+                    clip3removeDateVal=ele.daystodeletetask;
+                    
+                    console.log("changed clip3removeDateVal - "+clip3removeDateVal);
+                }
+                if(ele.daysfromrecordingdate===""&&ele.daysfromsigndate===""&&ele.daystodeletetask===""){
+                   nullTask.push(ele.taskname)
+               } 
+                
+            });
+            console.log("null Tasks: "+nullTask);
+
+        });
+}
 function getData() {
   getTasksDataFromPerson();
   document.getElementById("today").innerHTML =
@@ -63,14 +132,14 @@ function getData() {
           link: ele.linkfull,
           row: tableRow,
             chain: ele.chain,
-             id:ele.id
+             id: ele.id
         };
         tableRow++;
         setTimeout(() => {
-                    if (newPerson.id) {
-                        loaderStatus.innerHTML = "בודקת חרוז " + newPerson.id + "...";
-                        console.log("בודקת חרוז " + newPerson.id);
-                    }
+                    if (ele.id) {
+                        loaderStatus.innerHTML = "בודקת חרוז " + ele.id + "...";
+                        console.log("בודקת חרוז " + ele.id);
+                   }
                     if (index === json.data.length - 2) { 
                         setTimeout(() => {
                             loaderStatus.style.display = "none";
@@ -78,7 +147,7 @@ function getData() {
                             loader.style.display = "none";
                         }, 20);
                     }
-                }, Math.max(0, index*20-6000)); 
+                }, Math.max(0, index*20-1000)); 
         if(ele.linkfull===""){
             newPerson.link=ele.linkfive;
         }
@@ -120,8 +189,8 @@ function getData() {
                 newPerson.clipscreatedate.getMonth() === today.getMonth() &&
                 newPerson.clipscreatedate.getYear() === today.getYear())) &&
             getTasksDataFromPersonCont(newPerson.row, "clipscreate") ===
-              "not yet"
-          ) {
+              "not yet"&&!nullTask.includes("clipscreate"))
+           {
             newTask = {
               name: newPerson.name,
               recordingdate: newPerson.recordingdate,
@@ -147,8 +216,8 @@ function getData() {
                 newPerson.subsdate.getMonth() === today.getMonth() &&
                 newPerson.subsdate.getYear() === today.getYear())) &&
             getTasksDataFromPersonCont(newPerson.row, "subs") ===
-              "not yet"
-          ) {
+              "not yet"&&!nullTask.includes("subs"))
+           {
             newTask = {
               name: newPerson.name,
               recordingdate: newPerson.recordingdate,
@@ -183,8 +252,8 @@ function getData() {
                 newPerson.clip1senddate.getMonth() === today.getMonth() &&
                 newPerson.clip1senddate.getYear() === today.getYear())) &&
             getTasksDataFromPersonCont(newPerson.row, "clip1send") ===
-              "not yet"
-          ) {
+              "not yet"&&!nullTask.includes("clip1send"))
+           {
             newTask = {
               name: newPerson.name,
               recordingdate: newPerson.recordingdate,
@@ -228,8 +297,8 @@ function getData() {
                 newPerson.clip2senddate.getMonth() === today.getMonth() &&
                 newPerson.clip2senddate.getYear() === today.getYear())) &&
             getTasksDataFromPersonCont(newPerson.row, "clip2send") ===
-              "not yet"
-          ) {
+              "not yet"&&!nullTask.includes("clip2send"))
+           {
             newTask = {
               name: newPerson.name,
               recordingdate: newPerson.recordingdate,
@@ -273,8 +342,8 @@ function getData() {
                 newPerson.clip3senddate.getMonth() === today.getMonth() &&
                 newPerson.clip3senddate.getYear() === today.getYear())) &&
             getTasksDataFromPersonCont(newPerson.row, "clip3send") ===
-              "not yet"
-          ) {
+              "not yet"&&!nullTask.includes("clip3send"))
+           {
             newTask = {
               name: newPerson.name,
               recordingdate: newPerson.recordingdate,
@@ -647,7 +716,7 @@ function removeAllChildNodes(parent) {
     parent.removeChild(parent.firstChild);
   }
 }
-loaderStatus.innerHTML = "מתחילה בדיקת חרוזים...";
+loaderStatus.innerHTML = "מתחילה בדיקת נתונים...";
 
 setTimeout(() => {
 //  const loader = document.getElementById("loader");
@@ -811,19 +880,19 @@ function autoEndTask(row,type){
 }
 function subsDate(date) {
     var next = changeTimeZone(new Date(date.getTime()), 'Asia/Jerusalem');
-    next.setDate(date.getDate() + 1);
+    next.setDate(date.getDate() + parseInt(subsDateVal));
     next.setHours(0, 0, 0);
     return next;
 }
 function clipsCreateDate(date) {
   var next = changeTimeZone(new Date(date.getTime()), 'Asia/Jerusalem');
-  next.setDate(date.getDate() + 2);
+  next.setDate(date.getDate() + parseInt(clipsCreateDateVal));
   next.setHours(0, 0, 0);
   return next;
 }
 function clip1sendDate(date) {
   var next = changeTimeZone(new Date(date.getTime()), 'Asia/Jerusalem');
-  next.setDate(date.getDate() + 21);
+  next.setDate(date.getDate() + parseInt(clip1sendDateVal));
   if (next.getDay() === 6) {
     next.setDate(next.getDate() + 1);
   }
@@ -832,7 +901,7 @@ function clip1sendDate(date) {
 }
 function clip2sendDate(date) {
   var next = changeTimeZone(new Date(date.getTime()), 'Asia/Jerusalem');
-  next.setDate(date.getDate() + 28);
+  next.setDate(date.getDate() + parseInt(clip2sendDateVal));
   if (next.getDay() === 6) {
     next.setDate(next.getDate() + 1);
   }
@@ -841,7 +910,7 @@ function clip2sendDate(date) {
 }
 function clip3sendDate(date) {
   var next = changeTimeZone(new Date(date.getTime()), 'Asia/Jerusalem');
-  next.setDate(date.getDate() + 35);
+  next.setDate(date.getDate() + parseInt(clip3sendDateVal));
   if (next.getDay() === 6) {
     next.setDate(next.getDate() + 1);
   }
@@ -850,20 +919,18 @@ function clip3sendDate(date) {
 }
 function clip1removeDate(date) {
   var next = changeTimeZone(new Date(date.getTime()), 'Asia/Jerusalem');
-  next.setDate(date.getDate() + 35);
+  next.setDate(date.getDate() + parseInt(clip1sendDateVal)+parseInt(clip1removeDateVal));
   next.setHours(0, 0, 0);
   return next;
 }
 function clip2removeDate(date) {
   var next = changeTimeZone(new Date(date.getTime()), 'Asia/Jerusalem');
-  next.setDate(date.getDate() + 42);
-  next.setHours(0, 0, 0);
+next.setDate(date.getDate() + parseInt(clip2sendDateVal)+parseInt(clip2removeDateVal));  next.setHours(0, 0, 0);
   return next;
 }
 function clip3removeDate(date) {
   var next = changeTimeZone(new Date(date.getTime()), 'Asia/Jerusalem');
-  next.setDate(date.getDate() + 49);
-  next.setHours(0, 0, 0);
+next.setDate(date.getDate() + parseInt(clip3sendDateVal)+parseInt(clip3removeDateVal));  next.setHours(0, 0, 0);
   return next;
 }
 function changeTimeZone(date, timeZone) {

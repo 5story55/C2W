@@ -98,6 +98,9 @@ function submitData() {
     document.getElementById("clip5dateChange").innerHTML="לעדכן תאריך שליחה";
     document.getElementById("clip6dateChange").innerHTML="לעדכן תאריך שליחה";
     document.getElementById("outofmetaChange").innerHTML="להוציא מההגרלה של מטא";
+    document.getElementById("link555views").innerHTML ="אין נתוני צפייה";
+    document.getElementById("linkFullViews").innerHTML ="אין נתוני צפייה";
+    document.getElementById("link55ytViews").innerHTML ="אין נתוני צפייה";
   for (var i = 0; i < allPeople.length; i++) {
     var nameAndChain = document.getElementById("peopleList").value.split(" + ");
     if (
@@ -137,7 +140,27 @@ function submitData() {
         allPeople[i].link55yt;
       document.getElementById("fullDisplay").innerHTML =
          allPeople[i].linkfull;
-        
+            if(allPeople[i].link555!==""){
+                getVideoViews(allPeople[i].link555)
+                    .then(views => {
+                        document.getElementById("link555views").innerHTML = views;
+                    })
+                    .catch(error => console.error("Error fetching views:", error));    
+            }
+          if(allPeople[i].linkfull!==""){
+             getVideoViews(allPeople[i].linkfull)
+                .then(views => {
+                    document.getElementById("linkFullViews").innerHTML = views;
+                })
+                .catch(error => console.error("Error fetching views:", error));
+          }
+        if(allPeople[i].link55yt!==""){
+         getVideoViews(allPeople[i].link55yt)
+            .then(views => {
+                document.getElementById("link55ytViews").innerHTML = views;
+            })
+            .catch(error => console.error("Error fetching views:", error));
+        }
         if (allPeople[i].clip1date !== "") {
             document.getElementById("clip1dateB4").innerHTML=
               allPeople[i].clip1date.getDate() +
@@ -346,9 +369,79 @@ function sendData(obj, ele) {
     });
   
 }
+
+async function getVideoViews(vidURL) {
+    const videoId = extractVideoId(vidURL);
+    const apiKey = "AIzaSyB_aRQn_X-oFNEFJsY_fYehjICgeGf4tKk"; 
+
+    if (!videoId || !(await validateVideoId(videoId, apiKey))) {
+        return "אין נתוני צפייה";
+    }
+
+    var apiUrl = "https://www.googleapis.com/youtube/v3/videos?part=statistics&id="+videoId+"&key="+apiKey;
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        const viewCount = data.items?.[0]?.statistics?.viewCount;
+        if(viewCount){
+            return parseInt(viewCount)+" צפיות";
+        }
+        else{
+            return "אין נתוני צפייה";
+        }
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        return "שגיאה בשליפה";
+    }
+}
+
+
+async function getVideoStats(vidURL) {
+    const videoId = extractVideoId(vidURL);
+    const apiKey = "AIzaSyB_aRQn_X-oFNEFJsY_fYehjICgeGf4tKk";
+    
+    if (!videoId || !(await validateVideoId(videoId, apiKey))) {
+        return "אין נתוני צפייה";
+    }
+
+    return await getVideoViews(vidURL);
+}
+        
+function extractVideoId(vidURL) {
+    try {
+        const parsedUrl = new URL(vidURL);
+        if (parsedUrl.hostname.includes("youtube.com")) {
+            if (parsedUrl.searchParams.has("v")) {
+                return parsedUrl.searchParams.get("v");
+            } else if (/^\/(shorts|live|clip)\//.test(parsedUrl.pathname)) {
+                return parsedUrl.pathname.split("/")[2];
+            }
+        } else if (parsedUrl.hostname === "youtu.be") {
+            return parsedUrl.pathname.substring(1);
+        }
+    } catch (error) {
+        console.error("Invalid URL:", error);
+    }
+    return "";
+}
+       
+async function validateVideoId(videoId, apiKey) {
+    const apiUrl = "https://www.googleapis.com/youtube/v3/videos?part=id&id="+videoId+"&key="+apiKey;
+    
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        return Array.isArray(data.items) && data.items.length > 0;
+    } catch (error) {
+        console.error("Error validating video ID:", error);
+        return false;
+    }
+}
+
+
 function changeTimeZone(date, timeZone) {
-  if (typeof date === 'string') {
-    return new Date(new Date(date).toLocaleString('en-US', { timeZone }));
-  }
-  return new Date(date.toLocaleString('en-US', { timeZone }));
+    if (typeof date === 'string') {
+        return new Date(new Date(date).toLocaleString('en-US', { timeZone }));
+    }
+    return new Date(date.toLocaleString('en-US', { timeZone }));
 }

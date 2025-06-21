@@ -83,8 +83,8 @@ function getTimingData() {
                     
                     console.log("changed clip1removeDateVal - "+clip1removeDateVal);
                 }
-                if(ele.taskname==="clip2send"&&ele.daysfromrecordingdate!==""&&ele.daystodeletetask!==""){
-                        clip2sendDateVal=ele.daysfromrecordingdate;
+                if(ele.taskname==="clip2send"&&ele.daysfromsendclip1!==""&&ele.daystodeletetask!==""){
+                        clip2sendDateVal=ele.daysfromsendclip1;
                     
                     console.log("changed clip2sendDateVal - "+clip2sendDateVal);
                     clip2removeDateVal=ele.daystodeletetask;
@@ -286,8 +286,8 @@ function getData() {
           console.log(newPerson);
           allPeople.push(newPerson);
        // }
-       // if (newPerson.clip1sent !== "") {
-          newPerson.clip2senddate = changeTimeZone(new Date(clip2sendDate(newPerson.recordingdate)), 'Asia/Jerusalem');
+        if (newPerson.clip1sent !== "") {
+          newPerson.clip2senddate = changeTimeZone(new Date(clip2sendDate(newPerson.clip1sent)), 'Asia/Jerusalem');
           day = newPerson.recordingdate.getDate();
           month = newPerson.recordingdate.getMonth() + 1;
           recDate = day + "." + month;
@@ -318,7 +318,7 @@ function getData() {
               changeStatus(newPerson.row, newTask.type, "add");
             }
           }
-         newPerson.clip2removeDate = changeTimeZone(new Date(clip2removeDate(newPerson.recordingdate)), 'Asia/Jerusalem');
+         newPerson.clip2removeDate = changeTimeZone(new Date(clip2removeDate(newPerson.clip1sent)), 'Asia/Jerusalem');
 
          if (
             (newPerson.clip2removeDate < today ||
@@ -330,7 +330,7 @@ function getData() {
           ) {autoEndTask(newPerson.row,"clip2send");}
           console.log(newPerson);
           allPeople.push(newPerson);
-       // }
+        }
        // if (newPerson.clip2sent !== "") {
           newPerson.clip3senddate = changeTimeZone(new Date(clip3sendDate(newPerson.recordingdate)), 'Asia/Jerusalem');
           day = newPerson.recordingdate.getDate();

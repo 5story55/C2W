@@ -74,6 +74,25 @@ function getData() {
         personOption = document.createElement("option");
         personOption.value =
           newPerson.name + " + " + fixChainFromData(newPerson.chain);
+          const params = new URLSearchParams(window.location.search);
+            const nameP = params.get('name');
+            const chainP = params.get('chain');
+          const numP = params.get('num');
+            if (nameP&&chainP&&nameP===newPerson.name&&chainP===fixChainFromData(newPerson.chain)) {
+                document.getElementById("peopleList").value =newPerson.name + " + " + fixChainFromData(newPerson.chain);
+            }
+            if(numP){
+                 document.getElementById("clipNum").value = numP;
+                if(numP==='1'){
+                    document.getElementById("textType").value="0";
+                }
+                if(numP==='2'){
+                    document.getElementById("textType").value="1";
+                }
+                if(numP==='3'){
+                    document.getElementById("textType").value="2";
+                }
+            }
         personOption.id = rowCount;
          if (ele.fixedrecordingdate!=="ללא תאריך"&&(newPerson.name !== "" || newPerson.chain !== "")) {
           console.log(allPeople[size]);

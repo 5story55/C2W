@@ -597,6 +597,14 @@ function createTasks() {
       optionDiv.classList.add("d-inline-flex");
       optionDiv.classList.add("flex-row");
       optionInput = document.createElement("input");
+      optionBut=document.createElement("button");
+        optionBut.innerHTML="ביצוע";
+        optionBut.classList.add("btn");
+        optionBut.classList.add("btn-light");
+        const params= 'name='+encodeURIComponent(allTasks[i].name)+'&chain='+encodeURIComponent(chainName)+'&num=1';
+             optionBut.addEventListener("click", function () {
+                window.location.href='./send.html?'+params;
+            });
       optionInput.id = allTasks[i].row + "Checkclip1send";
       optionInput.type = "checkbox";
       optionInput.classList.add("form-check-input");
@@ -609,6 +617,7 @@ function createTasks() {
       optionList.innerHTML ="לשלוח פידבק + קליפ 1 ל"+allTasks[i].name + " - " + recDate +" - "+chainName;
       optionInput.classList.add("form-check-label");
       optionDiv.append(optionList);
+      optionDiv.append(optionBut);
       listSend.append(optionDiv);
       listSend.append(document.createElement("br"));
       size++;
@@ -620,6 +629,14 @@ function createTasks() {
       optionDiv.classList.add("d-inline-flex");
       optionDiv.classList.add("flex-row");
       optionInput = document.createElement("input");
+      optionBut=document.createElement("button");
+        optionBut.innerHTML="ביצוע";
+        optionBut.classList.add("btn");
+        optionBut.classList.add("btn-light");
+        const params= 'name='+encodeURIComponent(allTasks[i].name)+'&chain='+encodeURIComponent(chainName)+'&num=2';
+             optionBut.addEventListener("click", function () {
+                window.location.href='./send.html?'+params;
+            });
       optionInput.id = allTasks[i].row + "Checkclip2send";
       optionInput.type = "checkbox";
       optionInput.classList.add("form-check-input");
@@ -640,6 +657,7 @@ function createTasks() {
     }
       optionInput.classList.add("form-check-label");
       optionDiv.append(optionList);
+      optionDiv.append(optionBut);
       listSend.append(optionDiv);
       listSend.append(document.createElement("br"));
       size++;
@@ -673,6 +691,14 @@ function createTasks() {
       optionDiv.classList.add("d-inline-flex");
       optionDiv.classList.add("flex-row");
       optionInput = document.createElement("input");
+      optionBut=document.createElement("button");
+        optionBut.innerHTML="ביצוע";
+        optionBut.classList.add("btn");
+        optionBut.classList.add("btn-light");
+        const params= 'name='+encodeURIComponent(allTasks[i].name)+'&chain='+encodeURIComponent(chainName)+'&num=3';
+             optionBut.addEventListener("click", function () {
+                window.location.href='./send.html?'+params;
+            });
       optionInput.id = allTasks[i].row + "Checkclip3send";
       optionInput.type = "checkbox";
       optionInput.classList.add("form-check-input");
@@ -692,6 +718,7 @@ function createTasks() {
       
       optionInput.classList.add("form-check-label");
       optionDiv.append(optionList);
+      optionDiv.append(optionBut);
       listSend.append(optionDiv);
       listSend.append(document.createElement("br"));
       size++;

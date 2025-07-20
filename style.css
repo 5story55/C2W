@@ -1,4 +1,3 @@
-/* stylelint-disable selector-list-comma-newline-after */
 .blog-header {
   line-height: 1;
   border-bottom: 1px solid #e5e5e5;
@@ -127,7 +126,6 @@ h4 {
   }
 }
 
-/* Pagination */
 .blog-pagination {
   margin-bottom: 4rem;
 }
@@ -135,9 +133,7 @@ h4 {
   border-radius: 2rem;
 }
 
-/*
- * Blog posts
- */
+
 .blog-post {
   margin-bottom: 4rem;
 }
@@ -150,9 +146,7 @@ h4 {
   color: #727272;
 }
 
-/*
- * Footer
- */
+
 .blog-footer {
   padding: 2.5rem 0;
   color: #727272;
@@ -164,13 +158,51 @@ h4 {
   margin-bottom: 0;
 }
 
-/*
 html, body {
-  background-image: url('%D7%A8%D7%A7%D7%A2%20%D7%9C%D7%90%D7%A4%D7%9C%D7%99%D7%A7%D7%A6%D7%99%D7%94%20-%20%D7%98%D7%95%D7%A8%D7%A7%D7%99%D7%96%20-%20T2D-25%25.png');
-  background-size: cover;
-  background-position: center;
   height: 100%;
-  width: 100%;
+  min-width: 100vw; 
   margin: 0;
   padding: 0;
-}*/
+  overflow-x: auto; 
+  position: relative;
+}
+
+body::before {
+  content: "";
+  background-image: url('./%D7%A8%D7%A7%D7%A2%20%D7%9C%D7%90%D7%A4%D7%9C%D7%99%D7%A7%D7%A6%D7%99%D7%94%20-%20%D7%98%D7%95%D7%A8%D7%A7%D7%99%D7%96%20-%20T2D-25%25.png');
+  background-size: cover;
+  background-position: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.6;
+  z-index: -1;
+  pointer-events: none;
+}
+
+#options {
+    background-color: transparent !important;
+}
+.form-control {
+  background-color: #ffffff !important; 
+  color: #000000 !important;           
+}
+
+.btn {
+  background-color:#DBEDFF !important;
+  border: #DBEDFF !important;
+  color: #000000 !important; 
+border: 1px solid #0d6efd !important; 
+
+}
+
+.navbar .btn {
+  background-color: #ffffff !important;
+  border: none !important;
+  color: #000000 !important; 
+}
+.navbar {
+  background-color: #ffffff;
+}

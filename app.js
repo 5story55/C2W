@@ -677,7 +677,7 @@ function createTasks() {
       optionDiv.append(optionInput);
       optionList = document.createElement("label");
       optionList.id = "subs" + allTasks[i].row;
-      optionList.innerHTML =allTasks[i].name + " - " + recDate +" - לחתוך LIVE + כתוביות (ראיון, 555, שורט) + להוריד שורט למחשב - "+chainName;
+      optionList.innerHTML =allTasks[i].name + " - " + recDate +" - לחתוך LIVE + כתוביות (ראיון, 555, שורט) + להוריד שורט וחדר המתנה למחשב - "+chainName;
       optionInput.classList.add("form-check-label");
       optionDiv.append(optionList);
       listSubs.append(optionDiv);

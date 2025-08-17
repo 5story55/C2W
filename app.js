@@ -128,6 +128,7 @@ function getData() {
             clip1sent:"",
             clip2sent:"",
             subsdate:"",
+            livechain:false,
             feedback:ele.feedback,
           link: ele.linkfull,
           row: tableRow,
@@ -159,7 +160,10 @@ function getData() {
           if (ele.chainthree !== "") newPerson.chain = ele.chainthree;
           if (ele.chainfour !== "") newPerson.chain = ele.chainfour;
         }
-        if (ele.fixedchain !== "") newPerson.chain = ele.fixedchain; 
+        if (ele.fixedchain !== "") newPerson.chain = ele.fixedchain;
+        if(ele.chainlive!==""){
+             newPerson.livechain=true;
+        }
         if (ele.recordingdate !== "")
             newPerson.recordingdate = changeTimeZone(new Date(ele.recordingdate), 'Asia/Jerusalem');
         if (ele.nextrecdate !== "")
@@ -189,7 +193,7 @@ function getData() {
                 newPerson.clipscreatedate.getMonth() === today.getMonth() &&
                 newPerson.clipscreatedate.getYear() === today.getYear())) &&
             getTasksDataFromPersonCont(newPerson.row, "clipscreate") ===
-              "not yet"&&!nullTask.includes("clipscreate"))
+              "not yet"&&!nullTask.includes("clipscreate")&&newPerson.livechain===false)
            {
             newTask = {
               name: newPerson.name,
@@ -252,7 +256,7 @@ function getData() {
                 newPerson.clip1senddate.getMonth() === today.getMonth() &&
                 newPerson.clip1senddate.getYear() === today.getYear())) &&
             getTasksDataFromPersonCont(newPerson.row, "clip1send") ===
-              "not yet"&&!nullTask.includes("clip1send"))
+              "not yet"&&!nullTask.includes("clip1send")&&newPerson.livechain===false)
            {
             newTask = {
               name: newPerson.name,
@@ -297,7 +301,7 @@ function getData() {
                 newPerson.clip2senddate.getMonth() === today.getMonth() &&
                 newPerson.clip2senddate.getYear() === today.getYear())) &&
             getTasksDataFromPersonCont(newPerson.row, "clip2send") ===
-              "not yet"&&!nullTask.includes("clip2send"))
+              "not yet"&&!nullTask.includes("clip2send")&&newPerson.livechain===false)
            {
             newTask = {
               name: newPerson.name,
@@ -342,7 +346,7 @@ function getData() {
                 newPerson.clip3senddate.getMonth() === today.getMonth() &&
                 newPerson.clip3senddate.getYear() === today.getYear())) &&
             getTasksDataFromPersonCont(newPerson.row, "clip3send") ===
-              "not yet"&&!nullTask.includes("clip3send"))
+              "not yet"&&!nullTask.includes("clip3send")&&newPerson.livechain===false)
            {
             newTask = {
               name: newPerson.name,

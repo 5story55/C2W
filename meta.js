@@ -372,6 +372,16 @@ function getMessData() {
             ele.line18,
             ele.line19,
             ele.line20,
+            ele.line21,
+            ele.line22,
+            ele.line23,
+            ele.line24,
+            ele.line25,
+            ele.line26,
+            ele.line27,
+            ele.line28,
+            ele.line29,
+            ele.line30
           ]
         };
         for (var i = 1; i <= 8; i++) {
@@ -805,6 +815,16 @@ var newMess;
             ele.line18,
             ele.line19,
             ele.line20,
+            ele.line21,
+            ele.line22,
+            ele.line23,
+            ele.line24,
+            ele.line25,
+            ele.line26,
+            ele.line27,
+            ele.line28,
+            ele.line29,
+            ele.line30
           ]
         };
           if (newMess.name.includes("מטא 7")) {

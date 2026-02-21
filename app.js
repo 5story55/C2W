@@ -41,7 +41,7 @@ var loaderStatus = document.getElementById("loaderStatus");
 const url =
   "https://script.google.com/macros/s/AKfycbzojs9dIr-pr54z2zCEXxklX5h1wIRBHt1ktH8Wwg9KC62R4iDaaCftIK7rHJzrjC3nVQ/exec";
 const taskurl =
-  "https://script.google.com/macros/s/AKfycby17a_vfiR8IXwkNb8Uk2ZxAet_I1qkJd6y9n_nZRfl2S5-6pad8EmH9GyxRB0WrO78Aw/exec";
+  "https://script.google.com/macros/s/AKfycbwm0oPiXySNRd8jMccAhVThtSYcGQTqzivjLThlcL8tgldyDSlO8osMtglXTRwL2HtTUQ/exec";
 const timingDataURL =
     "https://script.google.com/macros/s/AKfycbzh6afzt8FHJ8DC7eACCbofDucc-K5gupE09xeMpkbnveNbrWJZAkdqiShaYrb-AyiTlg/exec";
 

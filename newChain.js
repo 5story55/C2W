@@ -157,7 +157,7 @@ function getMessData() {
         };
 
        for (var i = 1; i <=2 ; i++) {
-          if (newMess.name.includes("שרשרת חדשה " + i)) {
+          if (newMess.name.includes("שרשרת.קהילה חדשה " + i)) {
             messes[i - 1] = newMess;
           }
         }

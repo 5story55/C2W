@@ -80,7 +80,9 @@ function getChainData() {
             about:ele.about,
             row:chainRowCount,
             creatorPhone:ele.creatorphone,
-            creatorEmail:ele.creatoremail
+            creatorEmail:ele.creatoremail,
+            groupinvitelink:ele.groupinvitelink,
+            credit:ele.credit,
         };
         allChains.push(newChain);
         chainOption = document.createElement("option");
@@ -156,13 +158,13 @@ function getMessData() {
           ],
         };
 
-       for (var i = 1; i <=2 ; i++) {
+       for (var i = 1; i <=3 ; i++) {
           if (newMess.name.includes("שרשרת.קהילה חדשה " + i)) {
             messes[i - 1] = newMess;
           }
         }
       });
-      for (var i = 0; i <=1; i++) {
+      for (var i = 0; i <=2; i++) {
         for (var j = 0; j < messes[i].lines.length; j++) {
             
           cutMess(messes[i].lines, i + 1);
@@ -197,10 +199,25 @@ function cutMess(linesArr, messType) {
         currPerson.guestname
       );
     }
+    if (linesArr[i].includes("chainPlaylist")) {
+      linesArr[i] = linesArr[i].replace("chainPlaylist", currChain.playlist);
+    }
     if (linesArr[i].includes("chainParticipants")) {
       linesArr[i] = linesArr[i].replace(
         "chainParticipants",
         currChain.participants
+      );
+    }
+      if (linesArr[i].includes("credit")) {
+      linesArr[i] = linesArr[i].replace(
+        "credit",
+        currChain.credit
+      );
+    }
+      if (linesArr[i].includes("groupInviteLink")) {
+      linesArr[i] = linesArr[i].replace(
+        "groupInviteLink",
+        currChain.groupinvitelink
       );
     }
      if (linesArr[i].includes("chainAbout")) {

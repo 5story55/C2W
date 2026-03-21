@@ -121,10 +121,8 @@
           <div class="col-auto">
  
    
-             <h3 class="mb-0"><u>לשליחה בקבוצת החרוזים</u></h3>
-          <div class="form-control mb-3">
-              
-            <div id="text1"></div>
+             <h3 class="mb-0"><u>פתיחת שרשרת - לשליחה בקבוצת החרוזים</u></h3>
+            <div id="text1"></div>              
             <div class="form-control input-group-text col-auto mb-2" role="group">
                  <button
                 type="button"
@@ -138,6 +136,7 @@
                 <button type="button" onclick="window.location.href='./socialPost.html';" class="btn form-control btn-outline-secondary" id="toPost">לשליחת הפוסט של</button>
           
               </div>
+               <h3 class="mb-2"><u>פתיחת קהילה - לשליחה בקבוצת החרוזים</u></h3>
                <div id="text2"></div>
             <div class="form-control input-group-text col-auto mb-2" role="group">
                  <button
@@ -150,9 +149,21 @@
               </button>
                 <button type="button" class="btn form-control btn-outline-secondary" id="copyMes2" onclick="copy('2')">להעתקת ההודעה</button>
               </div>
+              <h3 class="mb-2"><u>פתיחת קהילה - תיאור הקבוצה בווטסאפ</u></h3>
+              <div id="text3"></div>
+              <div class="form-control input-group-text col-auto mb-2" role="group">
+                 <button
+                type="button"
+                class="btn form-control btn-outline-secondary"
+                id="send3"
+                onclick="whatsAppMes('3')"
+              >
+                לחברת הצוות
+              </button>
+                <button type="button" class="btn form-control btn-outline-secondary" id="copyMes3" onclick="copy('3')">להעתקת ההודעה</button>
+              </div>
             </div>
           </div>
-      </div>
       <script
         src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"

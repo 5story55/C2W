@@ -91,8 +91,8 @@ function getTimingData() {
                     
                     console.log("changed clip2removeDateVal - "+clip2removeDateVal);
                 }
-                if(ele.taskname==="clip3send"&&ele.daysfromrecordingdate!==""&&ele.daystodeletetask!==""){
-                        clip3sendDateVal=ele.daysfromrecordingdate;
+                if(ele.taskname==="clip3send"&&ele.daysfromsendclip2!==""&&ele.daystodeletetask!==""){
+                        clip3sendDateVal=ele.daysfromsendclip2;
                     
                     console.log("changed clip3sendDateVal - "+clip3sendDateVal);
                     clip3removeDateVal=ele.daystodeletetask;
@@ -125,6 +125,7 @@ function getData() {
           clipscreatedate: "",
             clip1senddate:"",
             clip2senddate:"",
+            clip3senddate:"",
             clip1sent:"",
             clip2sent:"",
             subsdate:"",
@@ -141,6 +142,9 @@ function getData() {
                         loaderStatus.innerHTML = "בודקת חרוז " + ele.id + "...";
                         console.log("בודקת חרוז " + ele.id);
                    }
+                    if(!ele.id){
+                       loaderStatus.innerHTML="בודקת חרוזים";
+                    }
                     if (index === json.data.length - 2) { 
                         setTimeout(() => {
                             loaderStatus.style.display = "none";
@@ -335,8 +339,8 @@ function getData() {
           console.log(newPerson);
           allPeople.push(newPerson);
         }
-       // if (newPerson.clip2sent !== "") {
-          newPerson.clip3senddate = changeTimeZone(new Date(clip3sendDate(newPerson.recordingdate)), 'Asia/Jerusalem');
+        if (newPerson.clip2sent !== "") {
+          newPerson.clip3senddate = changeTimeZone(new Date(clip3sendDate(newPerson.clip2sent)), 'Asia/Jerusalem');
           day = newPerson.recordingdate.getDate();
           month = newPerson.recordingdate.getMonth() + 1;
           recDate = day + "." + month;
@@ -348,26 +352,26 @@ function getData() {
             getTasksDataFromPersonCont(newPerson.row, "clip3send") ===
               "not yet"&&!nullTask.includes("clip3send")&&newPerson.livechain===false)
            {
-            newTask = {
-              name: newPerson.name,
-              recordingdate: newPerson.recordingdate,
-              type: "clip3send",
-              link:newPerson.link,
-              row: newPerson.row,
-                clip1date:newPerson.clip1sent,
-                clip2date:newPerson.clip2sent,
-                feedback:newPerson.feedback,
-                chain:newPerson.chain
-            };
+                newTask = {
+                  name: newPerson.name,
+                  recordingdate: newPerson.recordingdate,
+                  type: "clip3send",
+                  link:newPerson.link,
+                  row: newPerson.row,
+                    clip1date:newPerson.clip1sent,
+                    clip2date:newPerson.clip2sent,
+                    feedback:newPerson.feedback,
+                    chain:newPerson.chain
+                };
 
-            if (!taskAlreadyExist(newTask)) {
-              console.log("new task!");
-              console.log(newTask);
-              allTasks.push(newTask);
-              changeStatus(newPerson.row, newTask.type, "add");
-            }
-          }
-            newPerson.clip3removeDate = changeTimeZone(new Date(clip3removeDate(newPerson.recordingdate)), 'Asia/Jerusalem');
+                if (!taskAlreadyExist(newTask)) {
+                  console.log("new task!");
+                  console.log(newTask);
+                  allTasks.push(newTask);
+                  changeStatus(newPerson.row, newTask.type, "add");
+                }
+              }
+            newPerson.clip3removeDate = changeTimeZone(new Date(clip3removeDate(newPerson.clip2sent)), 'Asia/Jerusalem');
 
          if (
             (newPerson.clip3removeDate < today ||
@@ -379,7 +383,7 @@ function getData() {
           ) {autoEndTask(newPerson.row,"clip3send");}
           console.log(newPerson);
           allPeople.push(newPerson);
-       // } 
+       } 
             }
       });
       taskData();

@@ -57,6 +57,7 @@ function getData() {
           linkfull: ele.linkfull,
           linkshortyt: ele.linkshortyt,
           chaintype: "long",
+            order:String(ele.order),
           row: rowCount,
         };
         if (ele.fixedname !== "") newPerson.guestname = ele.fixedname;
@@ -79,7 +80,7 @@ function getData() {
         allPeople.push(newPerson);
         personOption = document.createElement("option");
         personOption.value =
-          newPerson.guestname + " + " + fixChainFromData(newPerson.chain);
+          newPerson.guestname + " + " + fixChainFromData(newPerson.chain)+""+newPerson.order;
         personOption.id = rowCount;
         if (ele.fixedrecordingdate!=="ללא תאריך"&&(newPerson.guestname !== "" || newPerson.chain !== "")) {
           console.log(allPeople[size]);
@@ -197,6 +198,10 @@ function cutMess(linesArr, messType) {
   if (currCrew.name === "") crewMem = "";
   var currText = "";
   var testDiv = document.getElementById("text" + messType);
+var nameAndChain = document
+    .getElementById("peopleList")
+    .value.split(" + ");
+ var chainAndOrder=splitChainAndOrder(nameAndChain[1]);
   removeAllChildNodes(testDiv);
   var i = 0;
   while (linesArr[i] !== "end") {
@@ -204,7 +209,7 @@ function cutMess(linesArr, messType) {
     if (linesArr[i].includes("nameOfChain")) {
       linesArr[i] = linesArr[i].replace(
         "nameOfChain",
-        nameAndChain[1]
+        chainAndOrder[0]
       );
     }
     if (linesArr[i].includes("firstNameOfGuest")) {
@@ -222,10 +227,7 @@ function cutMess(linesArr, messType) {
         fixCreatorFirstName()
       );
     }
-    if (linesArr[i].includes("fullNameOfGuest")) {
-      var nameAndChain = document
-        .getElementById("peopleList")
-        .value.split(" + ");
+    if (linesArr[i].includes("fullNameOfGuest")) {  
       linesArr[i] = linesArr[i].replace("fullNameOfGuest", nameAndChain[0]);
     }
     if (linesArr[i].includes("crewName")) {
@@ -465,9 +467,11 @@ function fixInterviewerFirstName(phoneNum) {
   var fullName = "";
   for (var i = 0; i < size; i++) {
     var nameAndChain = document.getElementById("peopleList").value.split(" + ");
+      var chainAndOrder=splitChainAndOrder(nameAndChain[1]);
     if (
       allPeople[i].guestphone === phoneNum &&
-      fixChainFromData(allPeople[i].chain) === nameAndChain[1]
+      fixChainFromData(allPeople[i].chain) === chainAndOrder[0]&&
+        allPeople[i].order===chainAndOrder[1]
     )
       fullName = allPeople[i].interviewername;
   }
@@ -489,20 +493,29 @@ function fixInterviewerFirstName(phoneNum) {
   }
   return splittedName[0];
 }
-
+function splitChainAndOrder(str) {
+    if(str){
+      var i = str.length - 1;
+      while (i >= 0 && /\d/.test(str[i])) {
+        i--;
+      }
+      return [str.slice(0, i + 1), str.slice(i + 1)];
+    }
+    return "";
+}
 function submitData() {
     document.getElementById("copyMes1").innerHTML="העתקת פוסט";
-
   for (var i = 0; i < allPeople.length; i++) {
-    /* if (
-      allPeople[i].guestname === document.getElementById("peopleList").value
-    ) {*/
-    var nameAndChain = document.getElementById("peopleList").value.split(" + ");
+      var nameAndChain = document.getElementById("peopleList").value.split(" + ");
+      var chainAndOrder=splitChainAndOrder(nameAndChain[1]);
     if (
       allPeople[i].guestname === nameAndChain[0] &&
-      fixChainFromData(allPeople[i].chain) === nameAndChain[1]
+      fixChainFromData(allPeople[i].chain) === chainAndOrder[0]&&
+        allPeople[i].order===chainAndOrder[1]
     ) {
       console.log("row num:" + allPeople[i].row);
+        
+        console.log(allPeople[i]);
       fullName = allPeople[i].guestname;
       linkFive = allPeople[i].linkfive;
       linkFull = allPeople[i].linkfull;

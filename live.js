@@ -34,6 +34,7 @@ function getData() {
             newPerson.chain = ele.chaintwo;
           }
           if (ele.chainthree !== "") newPerson.chain = ele.chainthree;
+             if (ele.chainsix !== "") newPerson.chain = ele.chainsix;
         }
         if (ele.fixedchain !== "") newPerson.chain = ele.fixedchain;
         allPeople.push(newPerson);

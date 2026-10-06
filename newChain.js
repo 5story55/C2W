@@ -27,7 +27,7 @@ var newChain = {};
 var currChain = {};
 var currPerson = {};
 var chainDataURL =
-  "https://script.google.com/macros/s/AKfycbye8Aq8q9R5EHO6_S1pwc71ogwBCt2XSYe5TVBbodwwuGc2ypMLBAvKi2IH749aP-Y78g/exec";
+  "https://script.google.com/macros/s/AKfycbzFbVdweKuCEHE6V-KqBPHnQw1p0C32OC8E6G-T6-LtynS8Rhtxddakoosw9ONQLCgIMw/exec";
 getChainData();
 getCrewData();
 getData();
@@ -85,6 +85,9 @@ function getChainData() {
             groupinvitelink:ele.groupinvitelink,
             credit:ele.credit,
         };
+        if(ele.panelplaylist!==""){
+              newChain.playlist=ele.panelplaylist;
+          }
         allChains.push(newChain);
         chainOption = document.createElement("option");
         chainOption.value = newChain.name;
